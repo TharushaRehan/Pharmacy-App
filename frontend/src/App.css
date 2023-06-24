@@ -1,0 +1,308 @@
+/*Navigation bar*/
+nav {
+  border-bottom: 4px solid black;
+  text-align: center;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #E3DFFD;
+  font-size: 20px;
+  z-index: 1;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav li {
+  display: inline-block;
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+nav a {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+  padding: 16px 32px;
+  transition: color 1s ease;
+  transition: background-color 0.8s ease;
+}
+
+nav a:hover {
+  background: black;
+  color: white;
+}
+
+.nav-right {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+.page-body {
+  padding-top: 3%;
+}
+
+/*Home Page*/
+.login-form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  border: 1px solid #a116e6;
+  box-shadow: 0px 5px 10px #AD7BE9;
+  border-radius: 25px;
+  background-color: #F1F6F9;
+  padding: 25px;
+}
+
+.email-textfield {
+  padding-bottom: 15%;
+}
+
+.password-textfield {
+  padding-bottom: 18%;
+}
+
+.error {
+  color: red;
+}
+
+/*Create Account*/
+.create-acc-form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  border: 1px solid #a116e6;
+  box-shadow: 0px 5px 10px #AD7BE9;
+  background-color: #F1F6F9;
+  border-radius: 25px;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 10px;
+
+}
+
+.textfield {
+  width: 350px;
+  height: 20px;
+}
+
+.pharmacy-name {
+  margin-top: 5%;
+  padding-bottom: 4%;
+}
+
+.pharmacy-address {
+  margin-top: 10%;
+  padding-bottom: 8%;
+}
+
+.pharmacy-district {
+  margin-top: 19%;
+  padding-bottom: 4%;
+}
+
+.pharmacist {
+  margin-top: 10%;
+  padding-bottom: 4%;
+}
+
+.pharmacy-type {
+  margin-top: 10%;
+  width: fit-content;
+  margin-left: -18.8%;
+}
+
+.radio-btn {
+  margin-left: 28.5%;
+  width: 250px;
+}
+
+.pharmacy-contact {
+  margin-top: 10%;
+  padding-bottom: 4%;
+}
+
+.pharmacy-email {
+  margin-top: 10%;
+  padding-bottom: 4%;
+}
+
+.pharmacy-password {
+  margin-top: 10%;
+  padding-bottom: 4%;
+}
+
+.pharmacy-conf-password {
+  margin-top: 10%;
+  padding-bottom: 5%;
+}
+
+.pharmacy-signup-btn {
+  margin-top: 5%;
+}
+
+.form-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-column {
+  flex: 1;
+  margin-right: 20px;
+}
+
+/*Contact Page*/
+.contact-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  border: 1px solid #a116e6;
+  box-shadow: 0px 5px 10px #AD7BE9;
+  border-radius: 25px;
+  background-color: #F1F6F9;
+  padding: 25px;
+
+}
+
+.con-name-textfield {
+  margin-top: 0%;
+}
+
+.con-email-container {
+  margin-top: 16%;
+}
+
+.mob-container {
+  margin-top: 16%;
+}
+
+.message-container {
+  margin-top: 16%;
+}
+
+.con-btn {
+  margin-top: 50%;
+}
+
+/*About Page Styles*/
+.about-container {
+  position: absolute;
+  display: flex;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 25px;
+  border: 1px solid #a116e6;
+  box-shadow: 0px 5px 10px #AD7BE9;
+  background-color: #F1F6F9;
+  padding: 25px;
+}
+
+.about-details {
+  font-size: 18px;
+}
+
+/*Pharmacy Page*/
+.pharmacy-dashbord {
+  position: absolute;
+  width: 87%;
+  height: 700px;
+  top: 10%;
+  left: 5%;
+  margin-right: 50%;
+  border-radius: 25px;
+  border: 1px solid #a116e6;
+  box-shadow: 0px 5px 10px #AD7BE9;
+  background-color: #F1F6F9;
+  padding: 25px;
+}
+
+.navigation {
+  min-width: 100px;
+  width: 250px;
+}
+
+.textfield {
+  width: 350px;
+  height: 20px;
+}
+
+.add-container {}
+
+.add-form-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-bottom: 2%;
+}
+
+.profile-container {
+  position: absolute;
+  margin-left: 27%;
+  margin-top: -12%;
+  width: 700px;
+  height: 550px;
+  display: inline-block;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-container #profile {
+  font-size: 30px;
+  margin-left: 40%;
+  padding-top: 30px;
+}
+
+.data-container {
+  display: flex;
+  font-size: 18px;
+  margin-left: 10%;
+}
+
+.name {
+  padding-left: 80px;
+  padding-top: 10px;
+}
+
+.address {
+  padding-left: 65px;
+  padding-top: 10px;
+}
+
+.district {
+  padding-left: 155px;
+  padding-top: 10px;
+}
+
+.pharmacist1 {
+  padding-left: 125px;
+  padding-top: 10px;
+}
+
+.contact {
+  padding-left: 80px;
+  padding-top: 10px;
+}
+
+.type {
+  padding-left: 92px;
+  padding-top: 10px;
+}
+
+.profile-btn {
+  margin-left: 15%;
+  margin-top: 5%;
+  display: flex;
+  gap: 70px;
+}
