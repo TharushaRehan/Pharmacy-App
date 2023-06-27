@@ -21,7 +21,14 @@ const GetDetailsPage = () => {
   const handleType = (event) => {
     setType(event.target.value);
   };
-
+  const handlePhoneNumberChange = (event) => {
+    const input = event.target.value;
+    // Remove non-digit characters from the input
+    const filteredInput = input.replace(/\D/g, "");
+    // Limit the input to 10 digits
+    const phoneNumber = filteredInput.slice(0, 10);
+    setContact(phoneNumber);
+  };
   const HandleCreateAcc = async (e) => {
     e.preventDefault();
     setError("");
@@ -113,7 +120,7 @@ const GetDetailsPage = () => {
                 className="textfield"
                 label="Contact Number"
                 value={contactNumber}
-                onChange={(e) => setContact(e.target.value)}
+                onChange={handlePhoneNumberChange}
               />
             </div>
             <div className="pharmacy-type">
@@ -126,18 +133,21 @@ const GetDetailsPage = () => {
                   onChange={handleType}
                 >
                   <FormControlLabel
-                    value="retail"
+                    value="Retail"
                     control={<Radio />}
                     label="Retail"
                   />
                   <FormControlLabel
-                    value="wholesale"
+                    value="Wholesale"
                     control={<Radio />}
                     label="Wholesale"
                   />
                 </RadioGroup>
               </div>
             </div>
+            <p style={{ textAlign: "center", color: "red" }}>
+              {error ? error : ""}
+            </p>
             <div style={{ paddingTop: "20px", paddingBottom: "20px" }}>
               <StyledButton size="large" type="submit" variant="contained">
                 Finish

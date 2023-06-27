@@ -24,7 +24,6 @@ app.use(async (req, res, next) => {
   if (req.user) {
     next();
   }
-  //req.user = req.user || {};
 });
 
 // define pharmacy scheme
@@ -80,11 +79,97 @@ app.get("/api/pharmacy/details", async (req, res) => {
 });
 
 // define medicine scheme
-//const medicineShema = new mongoose({});
+const medicineShema = new mongoose.Schema({
+  medName: { type: String, required: true },
+  quantity: { type: Number, required: true },
+  supplier: { type: String, required: true },
+  price: { type: Number, required: true },
+  expireDate: { type: String, required: true },
+  addedDate: { type: String, required: true },
+});
+const Medicine = mongoose.model("Medicine", medicineShema);
 
-app.put("/api/pharmacy/addmedicines", (req, res) => {});
-app.get("/api/pharmacy/getallmedicines", (req, res) => {
-  res.send("Hello");
+app.post("/api/pharmacy/addmedicines", async (req, res) => {
+  const { medName, quantity, supplier, price, expireDate, addedDate } =
+    req.body;
+  const { uid } = req.user;
+  const newMedicine = new Medicine({
+    medName,
+    quantity,
+    supplier,
+    price,
+    expireDate,
+    addedDate,
+  });
+  const pharmacy = await db.collection("pharmacies").findOne({ uid });
+  if (pharmacy) {
+    try {
+      await db
+        .collection("pharmacies")
+        .updateOne({ uid: uid }, { $push: { medicines: newMedicine } });
+
+      res.send("Medicine Added Successfully");
+    } catch (err) {
+      res.send(err);
+    }
+  } else {
+    console.log("Nooo");
+  }
+});
+
+app.put("/api/pharmacy/updatedetails", async (req, res) => {
+  const { pName, address, pDistrict, type, contact, pharmacist } = req.body;
+  const { uid } = req.user;
+  const pharmacy = await db.collection("pharmacies").findOne({ uid });
+  if (pharmacy) {
+    try {
+      await db.collection("pharmacies").updateOne(
+        { uid: uid },
+        {
+          $set: {
+            pharmacyName: pName,
+            pharmacyAddress: address,
+            pharmacyDistrict: pDistrict,
+            pharmacyType: type,
+            contactNumber: contact,
+            pharmacist: pharmacist,
+          },
+        }
+      );
+      res.send("Updated");
+    } catch (err) {
+      console.log(err);
+    }
+  }
+});
+
+app.put("/api/pharmacy/updatemedicine/:id", async (req, res) => {
+  const { id } = req.params;
+  //console.log(id);
+  const { quantity, price } = req.body;
+  const quantity1 = Number(quantity);
+  const { uid } = req.user;
+  const pharmacy = await db.collection("pharmacies").findOne({ uid });
+  //console.log(pharmacy.medicines);
+  if (pharmacy) {
+    try {
+      const medicines = pharmacy.medicines;
+      medicines.map(async (med) => {
+        if (med._id.valueOf() === id) {
+          await db.collection("pharmacies").updateOne(
+            { med },
+            {
+              $inc: { quantity: quantity1 },
+              $set: { price: price },
+            }
+          );
+        }
+      });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  }
 });
 connectToDB(() => {
   console.log("Successfully connected to the database.");

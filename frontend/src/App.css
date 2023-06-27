@@ -237,8 +237,6 @@ nav a:hover {
   height: 20px;
 }
 
-.add-container {}
-
 .add-form-row {
   display: flex;
   justify-content: center;
@@ -247,62 +245,68 @@ nav a:hover {
   padding-bottom: 2%;
 }
 
-.profile-container {
-  position: absolute;
-  margin-left: 27%;
-  margin-top: -12%;
+/* .profile-container {
+  margin-left: 21%;
+  margin-top: -5%;
   width: 700px;
   height: 550px;
   display: inline-block;
   justify-content: center;
   align-items: center;
-}
+  text-align: center;
+} */
 
-.profile-container #profile {
-  font-size: 30px;
-  margin-left: 40%;
-  padding-top: 30px;
-}
 
 .data-container {
   display: flex;
-  font-size: 18px;
-  margin-left: 10%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.profile-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-top: 4%;
+  gap: 40px;
+
 }
 
 .name {
   padding-left: 80px;
-  padding-top: 10px;
+  margin-top: -20px;
 }
 
 .address {
   padding-left: 65px;
-  padding-top: 10px;
+  margin-top: -20px;
 }
 
 .district {
-  padding-left: 155px;
-  padding-top: 10px;
+  padding-left: 146px;
+  margin-top: -20px;
 }
 
 .pharmacist1 {
-  padding-left: 125px;
-  padding-top: 10px;
+  padding-left: 118px;
+  margin-top: -20px;
 }
 
 .contact {
-  padding-left: 80px;
-  padding-top: 10px;
+  padding-left: 78px;
+  margin-top: -20px;
 }
 
 .type {
-  padding-left: 92px;
-  padding-top: 10px;
+  padding-left: 90px;
+  margin-top: -20px;
 }
 
-.profile-btn {
-  margin-left: 15%;
-  margin-top: 5%;
-  display: flex;
-  gap: 70px;
+.table {
+  width: 800px;
+  height: 500px;
+  overflow: auto;
+  margin-left: 25%;
 }
