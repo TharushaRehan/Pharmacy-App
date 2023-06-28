@@ -116,7 +116,7 @@ const GetDetailsPage = () => {
             <div className="pharmacy-contact">
               <StyledTextField
                 required
-                type="number"
+                type="text"
                 className="textfield"
                 label="Contact Number"
                 value={contactNumber}

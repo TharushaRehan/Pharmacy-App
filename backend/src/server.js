@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import admin from "firebase-admin";
 import fs from "fs";
 import { db, connectToDB } from "./db.js";
+import { ObjectId } from "mongodb";
 const credentials = JSON.parse(fs.readFileSync("./credentials.json"));
 
 admin.initializeApp({
@@ -35,7 +36,6 @@ const pharmacySchema = new mongoose.Schema({
   pharmacyType: { type: String, required: true },
   contactNumber: { type: Number, required: true },
   pharmacist: { type: String, required: true },
-  medicines: { type: Array, default: [] },
 });
 const Pharmacy = mongoose.model("Pharmacy", pharmacySchema);
 
@@ -78,45 +78,7 @@ app.get("/api/pharmacy/details", async (req, res) => {
   }
 });
 
-// define medicine scheme
-const medicineShema = new mongoose.Schema({
-  medName: { type: String, required: true },
-  quantity: { type: Number, required: true },
-  supplier: { type: String, required: true },
-  price: { type: Number, required: true },
-  expireDate: { type: String, required: true },
-  addedDate: { type: String, required: true },
-});
-const Medicine = mongoose.model("Medicine", medicineShema);
-
-app.post("/api/pharmacy/addmedicines", async (req, res) => {
-  const { medName, quantity, supplier, price, expireDate, addedDate } =
-    req.body;
-  const { uid } = req.user;
-  const newMedicine = new Medicine({
-    medName,
-    quantity,
-    supplier,
-    price,
-    expireDate,
-    addedDate,
-  });
-  const pharmacy = await db.collection("pharmacies").findOne({ uid });
-  if (pharmacy) {
-    try {
-      await db
-        .collection("pharmacies")
-        .updateOne({ uid: uid }, { $push: { medicines: newMedicine } });
-
-      res.send("Medicine Added Successfully");
-    } catch (err) {
-      res.send(err);
-    }
-  } else {
-    console.log("Nooo");
-  }
-});
-
+// update pharmacy details
 app.put("/api/pharmacy/updatedetails", async (req, res) => {
   const { pName, address, pDistrict, type, contact, pharmacist } = req.body;
   const { uid } = req.user;
@@ -142,29 +104,98 @@ app.put("/api/pharmacy/updatedetails", async (req, res) => {
     }
   }
 });
+// define medicine scheme
+const medicineShema = new mongoose.Schema({
+  uid: { type: String, required: true },
+  medName: { type: String, required: true },
+  quantity: { type: Number, required: true },
+  supplier: { type: String, required: true },
+  price: { type: Number, required: true },
+  expireDate: { type: String, required: true },
+  addedDate: { type: String, required: true },
+});
+const Medicine = mongoose.model("Medicine", medicineShema);
 
+// get all the medicines in the pharmacy
+app.get("/api/pharmacy/getmedicines", async (req, res) => {
+  const { uid } = req.user;
+  const pharmacy = await db.collection("pharmacies").findOne({ uid });
+  if (pharmacy) {
+    const medicines = await db.collection("medicines").find({ uid }).toArray();
+    res.send(medicines);
+  } else {
+    res.sendStatus(404);
+  }
+});
+
+// add medicines to the database
+app.post("/api/pharmacy/addmedicines", async (req, res) => {
+  const { medName, quantity, supplier, price, expireDate, addedDate } =
+    req.body;
+  const { uid } = req.user;
+  const newMedicine = new Medicine({
+    uid,
+    medName,
+    quantity,
+    supplier,
+    price,
+    expireDate,
+    addedDate,
+  });
+  const pharmacy = await db.collection("pharmacies").findOne({ uid });
+  if (pharmacy) {
+    try {
+      await db.collection("medicines").insertOne(newMedicine);
+
+      res.send("Medicine Added Successfully");
+    } catch (err) {
+      res.send(err);
+    }
+  } else {
+    console.log("Nooo");
+  }
+});
+
+// update medicine details
 app.put("/api/pharmacy/updatemedicine/:id", async (req, res) => {
   const { id } = req.params;
+  const { uid } = req.user;
   //console.log(id);
   const { quantity, price } = req.body;
   const quantity1 = Number(quantity);
-  const { uid } = req.user;
+  const price1 = Number(price);
   const pharmacy = await db.collection("pharmacies").findOne({ uid });
   //console.log(pharmacy.medicines);
   if (pharmacy) {
     try {
-      const medicines = pharmacy.medicines;
-      medicines.map(async (med) => {
-        if (med._id.valueOf() === id) {
-          await db.collection("pharmacies").updateOne(
-            { med },
-            {
-              $inc: { quantity: quantity1 },
-              $set: { price: price },
-            }
-          );
-        }
-      });
+      const filter = { _id: new ObjectId(id) };
+
+      const update = {
+        $inc: { quantity: quantity1 },
+        $set: { price: price1 },
+      };
+
+      await db.collection("medicines").updateOne(filter, update);
+      res.send("Successfully Updated");
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  }
+});
+
+// delete medicine details
+app.delete("/api/pharmacy/deletemedicine/:id", async (req, res) => {
+  const { id } = req.params;
+  const { uid } = req.user;
+
+  const pharmacy = await db.collection("pharmacies").findOne({ uid });
+  //console.log(pharmacy.medicines);
+  if (pharmacy) {
+    try {
+      const filter = { _id: new ObjectId(id) };
+      await db.collection("medicines").deleteOne(filter);
+      res.send("Successfully Deleted");
     } catch (error) {
       console.error(error);
       return res.status(500).json({ error: "Internal server error" });

@@ -10,12 +10,15 @@ import useUser from "../hooks/useUser";
 const MedUpdateForm = ({ open, onClose, medID }) => {
   const [price, setPrice] = useState("");
   const [quantity, setStock] = useState("");
+  const [msg, setMsg] = useState("");
   const { user } = useUser();
   const handleClose = () => {
     onClose();
+    setMsg("");
   };
 
   const handleConfirm = async () => {
+    setMsg("");
     if (price !== "" && quantity !== "") {
       try {
         const token = user && (await user.getIdToken());
@@ -30,6 +33,7 @@ const MedUpdateForm = ({ open, onClose, medID }) => {
         );
         const data = response.data;
         console.log(data);
+        setMsg(data);
       } catch (err) {
         console.log(err);
       }
@@ -73,9 +77,10 @@ const MedUpdateForm = ({ open, onClose, medID }) => {
           onChange={handleStockChange}
         />
       </DialogContent>
+      <p style={{ textAlign: "center", color: "red" }}>{msg ? msg : ""}</p>
       <DialogActions>
         <Button onClick={handleClose} color="secondary">
-          Cancel
+          Close
         </Button>
         <Button onClick={handleConfirm} color="secondary" autoFocus>
           Confirm

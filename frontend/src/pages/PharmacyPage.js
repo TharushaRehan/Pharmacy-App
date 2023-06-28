@@ -35,12 +35,9 @@ import {
   TableBody,
   Paper,
 } from "@mui/material";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
 import MedUpdateForm from "../components/MedUpdate";
+import MedDeleteForm from "../components/MedDelete";
+
 const StyledDatePicker = styled(DatePicker)`
   .MuiInputBase-root {
     background-color: #ffffff;
@@ -88,11 +85,13 @@ const PhamacyPage = () => {
   const [exDate, setExDate] = useState("");
   const [update, setUpdate] = useState(false);
   const [medAdded, setMedAdded] = useState(false);
+  const [medUpdate, setMedUpdate] = useState(false);
   const [medList, setMedList] = useState([]);
   const [addMsg, setAddMsg] = useState("");
   const [updateMsg, setUpdateMsg] = useState("");
   const { user, isLoading } = useUser();
   const [selectedMedicine, setSelectedMedicine] = useState(null);
+  const [deleteMedicine, setDeleteMedicine] = useState(null);
   useEffect(() => {
     const loadPharmacyDetails = async () => {
       if (user) {
@@ -109,8 +108,26 @@ const PhamacyPage = () => {
           setType(data.pharmacyType);
           setContact(data.contactNumber);
           setPharmacist(data.pharmacist);
-          setMedList(data.medicines);
 
+          setMedAdded(false);
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        console.log("No user");
+      }
+    };
+    const loadMedicineDetails = async () => {
+      if (user) {
+        const token = user && (await user.getIdToken());
+        const headers = token ? { authtoken: token } : {};
+        try {
+          const response = await axios.get("/api/pharmacy/getmedicines", {
+            headers: headers,
+          });
+          const data = response.data;
+          console.log(data);
+          setMedList(data);
           setMedAdded(false);
         } catch (error) {
           console.log(error);
@@ -121,8 +138,9 @@ const PhamacyPage = () => {
     };
     if (!isLoading) {
       loadPharmacyDetails();
+      loadMedicineDetails();
     }
-  }, [user, isLoading, medAdded]);
+  }, [user, isLoading, medAdded, medUpdate]);
   // get the current date
   useEffect(() => {
     const formatDate = (date) => {
@@ -224,8 +242,14 @@ const PhamacyPage = () => {
     setSelectedMedicine(key);
     //console.log(key);
   };
+  const handleDeleteMed = async (key) => {
+    setDeleteMedicine(key);
+    //console.log(key);
+  };
   const handleAlertDialogClose = () => {
     setSelectedMedicine(null);
+    setDeleteMedicine(null);
+    setMedUpdate(true);
   };
   const handleDeleteUser = async (e) => {
     e.preventDefault();
@@ -310,10 +334,12 @@ const PhamacyPage = () => {
                           <TableCell>{item.expireDate}</TableCell>
                           <TableCell>
                             <IconButton onClick={() => handleEditMed(item._id)}>
-                              <Edit />
+                              <Edit color="secondary" />
                             </IconButton>
-                            <IconButton>
-                              <Delete />
+                            <IconButton
+                              onClick={() => handleDeleteMed(item._id)}
+                            >
+                              <Delete color="error" />
                             </IconButton>
                           </TableCell>
                         </StyledTableRow>
@@ -326,8 +352,15 @@ const PhamacyPage = () => {
                     open={true}
                     medID={selectedMedicine}
                     onClose={handleAlertDialogClose}
-                    //onConfirm={handleStockUpdateConfirm}
                     medicine={selectedMedicine}
+                  />
+                )}
+                {deleteMedicine && (
+                  <MedDeleteForm
+                    open={true}
+                    medID={deleteMedicine}
+                    onClose={handleAlertDialogClose}
+                    medicine={deleteMedicine}
                   />
                 )}
               </>
@@ -523,44 +556,52 @@ const PhamacyPage = () => {
     }
   };
   return (
-    <div className="pharmacy-dashbord">
-      <h1 style={{ textAlign: "center" }}>Store : {pName}</h1>
-      <div className="navigation">
-        <List>
-          <ListItem>
-            <NavButton
-              size="small"
-              variant="contained"
-              startIcon={<Inventory />}
-              onClick={() => handleTabChange("inventory")}
-            >
-              Inventory
-            </NavButton>
-          </ListItem>
-          <ListItem>
-            <NavButton
-              size="small"
-              variant="contained"
-              startIcon={<AddBox />}
-              onClick={() => handleTabChange("add")}
-            >
-              Add Medicines
-            </NavButton>
-          </ListItem>
-          <ListItem>
-            <NavButton
-              size="small"
-              variant="contained"
-              startIcon={<Person />}
-              onClick={() => handleTabChange("profile")}
-            >
-              Profile
-            </NavButton>
-          </ListItem>
-        </List>
-      </div>
-      {renderTab()}
-    </div>
+    <>
+      {user ? (
+        <div className="pharmacy-dashbord">
+          <h1 style={{ textAlign: "center" }}>Store : {pName}</h1>
+          <div className="navigation">
+            <List>
+              <ListItem>
+                <NavButton
+                  size="small"
+                  variant="contained"
+                  startIcon={<Inventory />}
+                  onClick={() => handleTabChange("inventory")}
+                >
+                  Inventory
+                </NavButton>
+              </ListItem>
+              <ListItem>
+                <NavButton
+                  size="small"
+                  variant="contained"
+                  startIcon={<AddBox />}
+                  onClick={() => handleTabChange("add")}
+                >
+                  Add Medicines
+                </NavButton>
+              </ListItem>
+              <ListItem>
+                <NavButton
+                  size="small"
+                  variant="contained"
+                  startIcon={<Person />}
+                  onClick={() => handleTabChange("profile")}
+                >
+                  Profile
+                </NavButton>
+              </ListItem>
+            </List>
+          </div>
+          {renderTab()}
+        </div>
+      ) : (
+        <p style={{ textAlign: "center", fontSize: "30px", marginTop: "20%" }}>
+          Please Log In
+        </p>
+      )}
+    </>
   );
 };
 
