@@ -16,7 +16,7 @@ export const StyledButton = styled(Button)({
   },
 });
 export const NavButton = styled(Button)({
-  background: "linear-gradient(60deg, #D4ADFC 40%, #AD7BE9 90%)",
+  background: "linear-gradient(60deg, #D4ADFC 40%, #E1AEFF 70%)",
   borderRadius: 2,
   boxShadow: "0 3px 5px 2px #AD7BE9",
   color: "#030508",

@@ -4,6 +4,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { RadioGroup, Radio, FormControlLabel, FormLabel } from "@mui/material";
 import useUser from "../hooks/useUser";
+import Img from "../images/11641803_4788363.jpg";
+import { Done } from "@mui/icons-material";
 const GetDetailsPage = () => {
   const [pharmacyName, setPName] = useState("");
   const [pharmacyAddress, setPAddress] = useState("");
@@ -66,96 +68,110 @@ const GetDetailsPage = () => {
   };
 
   return (
-    <div className="create-acc-form">
-      <form onSubmit={HandleCreateAcc}>
-        <p style={{ fontSize: "30px", textAlign: "center" }}>Create Account</p>
-        <div className="form-container">
-          <div className="form-column">
-            <div className="pharmacy-name">
-              <StyledTextField
-                required
-                type="text"
-                className="textfield"
-                label="Pharmacy Name"
-                value={pharmacyName}
-                onChange={(e) => setPName(e.target.value)}
-              />
-            </div>
-            <div className="pharmacy-address">
-              <StyledTextField
-                required
-                multiline
-                rows={3}
-                type="text"
-                className="textfield"
-                label="Pharmacy Address"
-                value={pharmacyAddress}
-                onChange={(e) => setPAddress(e.target.value)}
-              />
-            </div>
-            <div className="pharmacy-district">
-              <StyledTextField
-                required
-                type="text"
-                className="textfield"
-                label="District"
-                value={pharmacyDistrict}
-                onChange={handleDistrict}
-              />
-            </div>
-            <div className="pharmacist">
-              <StyledTextField
-                required
-                type="text"
-                className="textfield"
-                label="Pharmacist"
-                value={pharmacist}
-                onChange={(e) => setPharmacist(e.target.value)}
-              />
-            </div>
-            <div className="pharmacy-contact">
-              <StyledTextField
-                required
-                type="text"
-                className="textfield"
-                label="Contact Number"
-                value={contactNumber}
-                onChange={handlePhoneNumberChange}
-              />
-            </div>
-            <div className="pharmacy-type">
-              <FormLabel>Pharmacy Type</FormLabel>
-              <div className="radio-btn">
-                <RadioGroup
-                  row
-                  name="type"
-                  value={pharmacyType}
-                  onChange={handleType}
+    <div className="create-page">
+      <div className="get-details-form">
+        <img
+          src={Img}
+          style={{ height: "500px", borderRadius: "25px", paddingTop: "40px" }}
+          alt="HomeImage"
+        />
+        <form onSubmit={HandleCreateAcc}>
+          <p style={{ fontSize: "30px", textAlign: "center" }}>
+            Get Pharmacy Details
+          </p>
+          <div className="form-container">
+            <div className="form-column">
+              <div className="pharmacy-name">
+                <StyledTextField
+                  required
+                  type="text"
+                  className="textfield"
+                  label="Pharmacy Name"
+                  value={pharmacyName}
+                  onChange={(e) => setPName(e.target.value)}
+                />
+              </div>
+              <div className="pharmacy-address">
+                <StyledTextField
+                  required
+                  multiline
+                  rows={3}
+                  type="text"
+                  className="textfield"
+                  label="Pharmacy Address"
+                  value={pharmacyAddress}
+                  onChange={(e) => setPAddress(e.target.value)}
+                />
+              </div>
+              <div className="pharmacy-district">
+                <StyledTextField
+                  required
+                  type="text"
+                  className="textfield"
+                  label="District"
+                  value={pharmacyDistrict}
+                  onChange={handleDistrict}
+                />
+              </div>
+              <div className="pharmacist">
+                <StyledTextField
+                  required
+                  type="text"
+                  className="textfield"
+                  label="Pharmacist"
+                  value={pharmacist}
+                  onChange={(e) => setPharmacist(e.target.value)}
+                />
+              </div>
+              <div className="pharmacy-contact">
+                <StyledTextField
+                  required
+                  type="text"
+                  className="textfield"
+                  label="Contact Number"
+                  value={contactNumber}
+                  onChange={handlePhoneNumberChange}
+                />
+              </div>
+              <div className="pharmacy-type">
+                <FormLabel>Pharmacy Type</FormLabel>
+                <div className="radio-btn">
+                  <RadioGroup
+                    row
+                    name="type"
+                    value={pharmacyType}
+                    onChange={handleType}
+                  >
+                    <FormControlLabel
+                      value="Retail"
+                      control={<Radio />}
+                      label="Retail"
+                    />
+                    <FormControlLabel
+                      value="Wholesale"
+                      control={<Radio />}
+                      label="Wholesale"
+                    />
+                  </RadioGroup>
+                </div>
+              </div>
+              <p style={{ textAlign: "center", color: "red" }}>
+                {error ? error : ""}
+              </p>
+              <div style={{ paddingTop: "20px", paddingBottom: "20px" }}>
+                <StyledButton
+                  size="large"
+                  type="submit"
+                  variant="contained"
+                  endIcon={<Done />}
                 >
-                  <FormControlLabel
-                    value="Retail"
-                    control={<Radio />}
-                    label="Retail"
-                  />
-                  <FormControlLabel
-                    value="Wholesale"
-                    control={<Radio />}
-                    label="Wholesale"
-                  />
-                </RadioGroup>
+                  Done
+                </StyledButton>
               </div>
             </div>
-            <p style={{ textAlign: "center", color: "red" }}>
-              {error ? error : ""}
-            </p>
-            <div style={{ paddingTop: "20px", paddingBottom: "20px" }}>
-              <StyledButton size="large" type="submit" variant="contained">
-                Finish
-              </StyledButton>
-            </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   );
 };

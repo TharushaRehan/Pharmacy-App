@@ -1,3 +1,55 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/*Home Page*/
+.home-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(to top, #E4A5FF, #ffffff);
+}
+
+.home-container {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  height: 100vh;
+}
+
+.home-img {
+  margin-top: 5%;
+  margin-left: 7%;
+  border: 1px solid #a116e6;
+  border-radius: 25px;
+}
+
+.login-form {
+  text-align: center;
+  margin-left: 15%;
+  margin-top: 5%;
+  border: 1px solid #a116e6;
+  box-shadow: 0px 5px 10px #AD7BE9;
+  border-radius: 25px;
+  background-color: #F1F6F9;
+  padding: 25px;
+}
+
+.email-textfield {
+  padding-bottom: 15%;
+}
+
+.password-textfield {
+  padding-bottom: 18%;
+}
+
+.error {
+  color: red;
+}
+
 /*Navigation bar*/
 nav {
   border-bottom: 4px solid black;
@@ -20,6 +72,12 @@ nav li {
   display: inline-block;
   padding-top: 16px;
   padding-bottom: 16px;
+}
+
+.nav-li.selected {
+  /* styles for selected item */
+  background: black;
+  color: white;
 }
 
 nav a {
@@ -46,35 +104,19 @@ nav a:hover {
   padding-top: 3%;
 }
 
-/*Home Page*/
-.login-form {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  border: 1px solid #a116e6;
-  box-shadow: 0px 5px 10px #AD7BE9;
-  border-radius: 25px;
-  background-color: #F1F6F9;
-  padding: 25px;
-}
-
-.email-textfield {
-  padding-bottom: 15%;
-}
-
-.password-textfield {
-  padding-bottom: 18%;
-}
-
-.error {
-  color: red;
-}
-
 /*Create Account*/
+.create-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(to top, #E4A5FF, #ffffff);
+}
+
 .create-acc-form {
   position: absolute;
+  display: flex;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -86,7 +128,24 @@ nav a:hover {
   padding-left: 30px;
   padding-right: 30px;
   padding-bottom: 10px;
+  gap: 50px;
+}
 
+.get-details-form {
+  position: absolute;
+  display: flex;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  border: 1px solid #a116e6;
+  box-shadow: 0px 5px 10px #AD7BE9;
+  background-color: #F1F6F9;
+  border-radius: 25px;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 10px;
+  gap: 50px;
 }
 
 .textfield {
@@ -160,8 +219,18 @@ nav a:hover {
 }
 
 /*Contact Page*/
+.contact-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(to top, #E4A5FF, #ffffff);
+}
+
 .contact-container {
   position: absolute;
+  display: flex;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -171,7 +240,7 @@ nav a:hover {
   border-radius: 25px;
   background-color: #F1F6F9;
   padding: 25px;
-
+  gap: 50px;
 }
 
 .con-name-textfield {
@@ -196,10 +265,12 @@ nav a:hover {
 
 /*About Page Styles*/
 .about-page {
-  background-color: #b571d7;
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  padding-top: 1px;
-  height: 870px;
+  height: 100%;
+  background-image: linear-gradient(to top, #E4A5FF, #ffffff);
 }
 
 .about-container {
@@ -213,6 +284,7 @@ nav a:hover {
   box-shadow: 0px 5px 10px #AD7BE9;
   background-color: #F1F6F9;
   padding: 25px;
+  gap: 20px;
 }
 
 .about-details {
@@ -220,6 +292,15 @@ nav a:hover {
 }
 
 /*Pharmacy Page*/
+.pharmacy-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(to top, #E4A5FF, #ffffff);
+}
+
 .pharmacy-dashbord {
   position: absolute;
   width: 87%;
@@ -244,6 +325,18 @@ nav a:hover {
   height: 20px;
 }
 
+.add-container {
+  position: absolute;
+  width: 400px;
+  height: 500px;
+  top: 20%;
+  left: 36%;
+  border: 1px solid #a116e6;
+  box-shadow: 0px 5px 10px #AD7BE9;
+  background-color: #F1F6F9;
+  padding: 25px;
+}
+
 .add-form-row {
   display: flex;
   justify-content: center;
@@ -251,18 +344,6 @@ nav a:hover {
   text-align: center;
   padding-bottom: 2%;
 }
-
-/* .profile-container {
-  margin-left: 21%;
-  margin-top: -5%;
-  width: 700px;
-  height: 550px;
-  display: inline-block;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-} */
-
 
 .data-container {
   display: flex;

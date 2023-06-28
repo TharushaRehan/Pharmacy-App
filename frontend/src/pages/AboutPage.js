@@ -1,7 +1,14 @@
+import AboutImg from "../images/5462433_2808319.jpg";
+
 const AboutPage = () => {
   return (
     <div className="about-page">
       <div className="about-container">
+        <img
+          src={AboutImg}
+          style={{ height: "500px", borderRadius: "25px" }}
+          alt="HomeImage"
+        />
         <div className="about-details">
           <p style={{ fontSize: "35px", textAlign: "center" }}>About Me</p>
           <p>Name : B. Tharusha Rehan Perera</p>

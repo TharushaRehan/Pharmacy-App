@@ -13,6 +13,7 @@ import {
   Delete,
   Done,
   Edit,
+  East,
 } from "@mui/icons-material";
 
 import {
@@ -57,7 +58,19 @@ const StyledTableContainer = styled(TableContainer)`
 `;
 
 const StyledTableRow = styled(TableRow)`
-  background-color: #ecf2ff;
+  background-color: #ffffff;
+  & > * {
+    border-right: 1px solid #000000; // Black column lines
+    border-top: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    border-left: 1px solid #000000;
+  }
+  &:last-child > * {
+    border-bottom: 1px solid #000000; // Black bottom border
+  }
+`;
+const StyledTableRow1 = styled(TableRow)`
+  background-color: #e3dffd;
   & > * {
     border-right: 1px solid #000000; // Black column lines
     border-top: 1px solid #000000;
@@ -312,7 +325,7 @@ const PhamacyPage = () => {
                 <StyledTableContainer component={Paper}>
                   <Table>
                     <TableHead>
-                      <StyledTableRow>
+                      <StyledTableRow1>
                         <TableCell>Date Added</TableCell>
                         <TableCell>Name</TableCell>
                         <TableCell>Stock</TableCell>
@@ -320,7 +333,7 @@ const PhamacyPage = () => {
                         <TableCell>Price</TableCell>
                         <TableCell>Expire Date</TableCell>
                         <TableCell>Actions</TableCell>
-                      </StyledTableRow>
+                      </StyledTableRow1>
                     </TableHead>
 
                     <TableBody>
@@ -371,6 +384,8 @@ const PhamacyPage = () => {
     } else if (activeTab === "add") {
       return (
         <div className="add-container">
+          <br />
+          <br />
           <h3
             style={{ textAlign: "center", marginTop: "-10%", fontSize: "20px" }}
           >
@@ -388,6 +403,7 @@ const PhamacyPage = () => {
               />
             </div>
             <br />
+            <br />
             <div className="add-form-row">
               <StyledTextField
                 required
@@ -398,6 +414,7 @@ const PhamacyPage = () => {
                 onChange={handleQuantityChange}
               />
             </div>
+            <br />
             <br />
             <div className="add-form-row">
               <StyledTextField
@@ -410,6 +427,7 @@ const PhamacyPage = () => {
               />
             </div>
             <br />
+            <br />
             <div className="add-form-row">
               <StyledTextField
                 required
@@ -420,6 +438,7 @@ const PhamacyPage = () => {
                 onChange={handlePriceChange}
               />
             </div>
+            <br />
             <br />
             <div className="add-form-row">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -556,7 +575,7 @@ const PhamacyPage = () => {
     }
   };
   return (
-    <>
+    <div className="pharmacy-page">
       {user ? (
         <div className="pharmacy-dashbord">
           <h1 style={{ textAlign: "center" }}>Store : {pName}</h1>
@@ -592,6 +611,16 @@ const PhamacyPage = () => {
                   Profile
                 </NavButton>
               </ListItem>
+              <ListItem>
+                <NavButton
+                  size="small"
+                  variant="contained"
+                  endIcon={<East />}
+                  onClick={() => handleTabChange("placeOrder")}
+                >
+                  Place Order
+                </NavButton>
+              </ListItem>
             </List>
           </div>
           {renderTab()}
@@ -601,7 +630,7 @@ const PhamacyPage = () => {
           Please Log In
         </p>
       )}
-    </>
+    </div>
   );
 };
 
